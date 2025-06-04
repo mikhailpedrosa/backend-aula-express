@@ -1,5 +1,5 @@
 const express = require('express');
-const BolosRouter = require('./routes/BolosRoute');
+const PrivateRoutes = require('./routes/PrivateRoutes');
 
 const app = express();
 
@@ -7,12 +7,13 @@ const HOST = '127.0.0.1';
 const PORT = 3000;
 
 app.use(express.json());
-app.use(BolosRouter);
-
 app.get('/', (req, res) => {
     res.send('Hello World!');
 
 })
+app.use(PrivateRoutes);
+
+
 
 app.get('/teste/:id', (req, res) => {
     const params = req.params;
