@@ -1,5 +1,6 @@
 const express = require('express');
 const PrivateRoutes = require('./routes/PrivateRoutes');
+const PublicRoutes = require('./routes/PublicRoutes');
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 
 })
+
+app.use(PublicRoutes);
 app.use(PrivateRoutes);
 
 

@@ -1,19 +1,20 @@
-const jwt = require('jsonwebtoken');
-const expres = require('express');
 require('dotenv').config();
-const AuthController = require('../controllers/AuthController');
+const jwt = require('jsonwebtoken');
+const express = require('express');
 
+const AuthController = require('../controllers/AuthController');
 const PublicRoutes = express.Router();
 
-PublicRoutes.get('/login', (req, res) => {
+PublicRoutes.post('/login', (req, res) => {
+    const uniqueToken = process.env.UNIQUE_TOKEN;
+    const body = req.body;
     const auth = new AuthController();
-    const body = req.login;
+    
     const data = auth.login(body.login, body.senha);
 
     if (data) {
-        const token = jwt.sign(data, process.env.CHAVE_API, {
-            expireIn: '8h'
-        });
+        const token = jwt.sign({ login: data.login, senha: data.senha}, uniqueToken, { expiresIn: '8h'});
+            
         return res.json({
             token: token
         });
